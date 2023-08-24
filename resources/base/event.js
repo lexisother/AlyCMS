@@ -141,7 +141,7 @@ ig.module('base.event')
 
       update() {
         for (let call of this.runningEventCalls) {
-          if (!call.pauseParallel) {
+          if (ig.paused && !call.pauseParallel) {
             continue;
           }
 

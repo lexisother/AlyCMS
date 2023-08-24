@@ -3,6 +3,7 @@
 // <https://github.com/phoboslab/Impact/blob/master/lib/impact/impact.js>
 
 window.ig = {
+  paused: false,
   modules: {},
 
   _current: null,
