@@ -50,7 +50,7 @@ ig.module('base.event')
 
       /** Authored by me, fixed by East_Arctica */
       performStep(stackItem) {
-        while (!stackItem.currentStep) {
+        do {
           if (!stackItem.currentStep) {
             stackItem.currentStep = stackItem.event.rootStep;
           }
@@ -65,7 +65,8 @@ ig.module('base.event')
           if (step.getInlineEvent) {
             stackItem = this.callInlineEvent(step.getInlineEvent(), step.getInlineEventInput());
           }
-        };
+        } while (!stackItem.currentStep)
+
         return stackItem;
       },
 
