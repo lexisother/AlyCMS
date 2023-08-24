@@ -6,5 +6,33 @@
     <title>~alyxia</title>
     <script src="resources/impact.js"></script>
   </head>
-  <body></body>
+  <body>
+      <button
+              is="step-button"
+              steps='[
+                {
+                  "type": "CONSOLE_LOG",
+                  "text": "HIIII"
+                }
+              ]'>
+          Test
+      </button>
+
+      <script>
+        class EventStepButton extends HTMLButtonElement {
+          constructor() {
+              super();
+              this.onclick = this.onClick
+          }
+
+          onClick() {
+              const rawSteps = this.getAttribute("steps").replace(/\n/g, "").trim();
+              const steps = JSON.parse(rawSteps);
+              ig.events.callEvent(new ig.Event({ steps }), ig.EventRunType.INTERRUPTABLE);
+          }
+        }
+
+        customElements.define('step-button', EventStepButton, { extends: 'button' });
+      </script>
+  </body>
 </html>
