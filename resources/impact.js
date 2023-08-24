@@ -263,4 +263,9 @@ ig.module('impact')
     document.body.appendChild(p);
 
     ig.events = new ig.EventManager();
+
+    // Baby's first "event loop", frankly I need a better system for this, but it works for now
+    setInterval(() => {
+      ig.events.update();
+    }, 1e3 / 60)
   });
