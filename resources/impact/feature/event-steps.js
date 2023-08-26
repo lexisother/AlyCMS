@@ -1,5 +1,5 @@
-ig.module('base.event-steps')
-  .requires('base.event', 'base.vars')
+ig.module('impact.feature.event-steps')
+  .requires('impact.base.event')
   .defines(() => {
     ig.EVENT_STEP.CONSOLE_LOG = ig.EventStepBase.extend({
       text: null,

@@ -1,5 +1,5 @@
-ig.module('base.event')
-  .requires('base.steps')
+ig.module('impact.base.event')
+  .requires('impact.base.steps')
   .defines(() => {
     ig.EventCall = ig.Class.extend({
       runType: 0,

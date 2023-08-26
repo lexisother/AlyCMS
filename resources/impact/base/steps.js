@@ -1,4 +1,4 @@
-ig.module('base.steps').defines(() => {
+ig.module('impact.base.steps').defines(() => {
   // TODO: Rewrite to not be abcdefg
   function helper(steps, allSteps, labeledSteps, someArr) {
     for (var f = null, g = [], h = 0; h < steps.length; h++) {

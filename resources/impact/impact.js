@@ -256,17 +256,10 @@ window.ig.Class.extend = function (prop) {
 };
 
 ig.module('impact')
-  .requires('dom.ready', 'base.event-steps')
+  .requires('dom.ready')
   .defines(() => {
     console.log('impact');
     let p = document.createElement('p');
     p.textContent = `Loaded ${Object.keys(ig.modules).length} modules`;
     document.body.appendChild(p);
-
-    ig.events = new ig.EventManager();
-
-    // Baby's first "event loop", frankly I need a better system for this, but it works for now
-    setInterval(() => {
-      ig.events.update();
-    }, 1e3 / 60);
   });

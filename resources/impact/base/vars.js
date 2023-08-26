@@ -1,4 +1,4 @@
-ig.module('base.vars').defines(() => {
+ig.module('impact.base.vars').defines(() => {
   ig.VarCondition = ig.Class.extend({
     condition: null,
     code: '',
