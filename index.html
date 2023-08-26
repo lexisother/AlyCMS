@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>~alyxia</title>
-    <script src="resources/impact.js"></script>
+    <script src="resources/impact/impact.js"></script>
+    <script src="resources/site/main.js"></script>
   </head>
   <body>
       <button
@@ -17,22 +18,5 @@
               ]'>
           Test
       </button>
-
-      <script>
-        class EventStepButton extends HTMLButtonElement {
-          constructor() {
-              super();
-              this.onclick = this.onClick
-          }
-
-          onClick() {
-              const rawSteps = this.getAttribute("steps").replace(/\n/g, "").trim();
-              const steps = JSON.parse(rawSteps);
-              ig.events.callEvent(new ig.Event({ steps }), ig.EventRunType.INTERRUPTABLE);
-          }
-        }
-
-        customElements.define('step-button', EventStepButton, { extends: 'button' });
-      </script>
   </body>
 </html>
