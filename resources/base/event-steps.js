@@ -1,5 +1,5 @@
 ig.module('base.event-steps')
-  .requires('base.event')
+  .requires('base.event', 'base.vars')
   .defines(() => {
     ig.EVENT_STEP.CONSOLE_LOG = ig.EventStepBase.extend({
       text: null,
@@ -26,4 +26,25 @@ ig.module('base.event-steps')
             return this.name;
         }
     });
+    ig.EVENT_STEP.IF = ig.EventStepBase.extend({
+        condition: null,
+        withElse: false,
+        branches: {},
+        init(data) {
+            this.condition = new ig.VarCondition(data.condition);
+            this.withElse = data.withElse;
+        },
+        getBranchNames() {
+            return this.withElse ? ['thenStep', 'elseStep'] : ['thenStep'];
+        },
+        getNext() {
+            return this.condition.evaluate()
+          ? this.branches.thenStep
+            ? this.branches.thenStep
+            : this._nextStep
+          : this.branches.elseStep
+          ? this.branches.elseStep
+          : this._nextStep;
+        }
+    })
   });
