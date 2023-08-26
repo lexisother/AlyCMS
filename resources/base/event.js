@@ -59,13 +59,13 @@ ig.module('base.event')
           if (!step) break;
 
           if (step.start) {
-            step.start(stackItem.stepData, this)
+            step.start(stackItem.stepData, this);
           }
 
           if (step.getInlineEvent) {
             stackItem = this.callInlineEvent(step.getInlineEvent(), step.getInlineEventInput());
           }
-        } while (!stackItem.currentStep)
+        } while (!stackItem.currentStep);
 
         return stackItem;
       },
@@ -76,6 +76,7 @@ ig.module('base.event')
         for (
           stackItem.currentStep || (stackItem = this.performStep(stackItem));
           stackItem.currentStep && stackItem.currentStep.run(stackItem.stepData);
+
         ) {
           var jumpLabel = null;
           if (stackItem.currentStep.getJumpLabelName) {
@@ -87,7 +88,7 @@ ig.module('base.event')
           }
 
           if (!jumpLabel) {
-            jumpLabel = stackItem.currentStep.getNext(stackItem.stepData)
+            jumpLabel = stackItem.currentStep.getNext(stackItem.stepData);
           }
 
           stackItem.currentStep = jumpLabel;
@@ -95,7 +96,7 @@ ig.module('base.event')
             stackItem = this.performStep(stackItem);
           } else {
             this.stack.pop();
-            labelName = this.stack[this.stack.length - 1]
+            labelName = this.stack[this.stack.length - 1];
             if (labelName) {
               stackItem = labelName;
               stackItem.currentStep = stackItem.currentStep.getNext(stackItem.stepData);

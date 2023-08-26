@@ -268,5 +268,5 @@ ig.module('impact')
     // Baby's first "event loop", frankly I need a better system for this, but it works for now
     setInterval(() => {
       ig.events.update();
-    }, 1e3 / 60)
+    }, 1e3 / 60);
   });
