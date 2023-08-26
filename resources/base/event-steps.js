@@ -10,4 +10,20 @@ ig.module('base.event-steps')
         console.log(this.text);
       },
     });
+
+    ig.EVENT_STEP.LABEL = ig.EventStepBase.extend({
+        name: null,
+        init(data) {
+            this.name = data.name;
+        }
+    });
+    ig.EVENT_STEP.GOTO_LABEL = ig.EventStepBase.extend({
+        name: null,
+        init(data) {
+            this.name = data.name;
+        },
+        getJumpLabelName() {
+            return this.name;
+        }
+    });
   });
