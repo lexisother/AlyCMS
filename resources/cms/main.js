@@ -1,2 +1,1 @@
-ig.module("cms.main")
-    .defines(() => {});
+ig.module('cms.main').defines(() => {});

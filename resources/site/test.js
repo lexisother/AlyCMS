@@ -57,5 +57,5 @@ ig.module('site.test')
       box.doTransition('step3').then(() => console.log('transition step3 ended'));
       box.doTransition('step4').then(() => console.log('transition step4 ended'));
     }
-    window.demoAnimation = demoAnimation
+    window.demoAnimation = demoAnimation;
   });
