@@ -1,0 +1,20 @@
+{
+    "name": "alyxia/backend",
+    "type": "project",
+    "require": {
+        "logto/sdk": "^0.1.0",
+        "bramus/router": "^1.6"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Alyxia\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alyxia Sother",
+            "email": "alyxia@riseup.net"
+        }
+    ]
+}
