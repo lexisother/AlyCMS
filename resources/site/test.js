@@ -1,5 +1,5 @@
 ig.module('site.test')
-  .requires('site.deps')
+  .requires('site.deps.crossani')
   .defines(() => {
     console.log(ig.EASE);
     const box = document.querySelector('.box');

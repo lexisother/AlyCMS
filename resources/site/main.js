@@ -4,7 +4,6 @@ ig.module('site.main')
     'impact.feature.plug-in',
     'site.elements',
     // 'site.test',
-    'site.deps',
   )
   .defines(() => {
     ig.Site = ig.Class.extend({
