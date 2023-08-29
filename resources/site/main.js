@@ -1,5 +1,11 @@
 ig.module('site.main')
-  .requires('impact.base.plug-in', 'impact.feature.plug-in', 'site.elements')
+  .requires(
+    'impact.base.plug-in',
+    'impact.feature.plug-in',
+    'site.elements',
+    // 'site.test',
+    'site.deps',
+  )
   .defines(() => {
     ig.Site = ig.Class.extend({
       events: new ig.EventManager(),
