@@ -14,5 +14,11 @@ ig.module('site.deps').defines(async () => {
 
   if (window.location.pathname === "/callback.html") {
     await logtoClient.handleSignInCallback(window.location.href);
+    window.location.href = "/cms.html";
+  }
+
+  if (window.location.pathname === "/cms.html") {
+    const info = await logtoClient.fetchUserInfo();
+    console.log(info);
   }
 });
