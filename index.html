@@ -8,6 +8,8 @@
     <script src="resources/site/main.js"></script>
   </head>
   <body>
+      <button onclick="logtoClient.signIn(`${window.location.href}callback.html`)">sign in</button>
+
       <button
               is="step-button"
               steps='[
@@ -18,5 +20,16 @@
               ]'>
           Test
       </button>
+
+<!--      <div style="background-color: red" onclick="demoAnimation()" class="box"></div>-->
+
+<!--      <style>-->
+<!--        .box {-->
+<!--          width: 100px;-->
+<!--          height: 100px;-->
+<!--          border: 5px solid blue;-->
+<!--          margin-top: 1rem;-->
+<!--        }-->
+<!--      </style>-->
   </body>
 </html>
