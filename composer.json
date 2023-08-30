@@ -3,12 +3,14 @@
     "type": "project",
     "require": {
         "logto/sdk": "^0.1.0",
-        "bramus/router": "^1.6"
+        "illuminate/database": "^10.21",
+        "illuminate/routing": "^10.21",
+        "illuminate/events": "^10.21"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Alyxia\\Backend\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
