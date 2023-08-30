@@ -6,15 +6,15 @@ use Illuminate\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 
-$container = new Container();
+$app = app();
 $events = new Dispatcher();
 $request = Request::capture();
-$container->instance('Illuminate\Http\Request', $request);
-$container->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function() use ($container) {
-    return new Illuminate\Routing\CallableDispatcher($container);
+$app->instance('Illuminate\Http\Request', $request);
+$app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function() use ($app) {
+    return new Illuminate\Routing\CallableDispatcher($app);
 });
 
-$router = new Router($events, $container);
+$router = new Router($events, $app);
 require_once 'routes.php';
 $response = $router->dispatch($request);
 $response->send();
