@@ -4,7 +4,6 @@ require __DIR__ . "/vendor/autoload.php";
 use Bramus\Router\Router;
 use Logto\Sdk\LogtoClient;
 use Logto\Sdk\LogtoConfig;
-use Logto\Sdk\LogtoException;
 
 $router = new Router();
 $client = new LogtoClient(
@@ -25,15 +24,14 @@ $router->get('/cms', function() use ($client) {
 });
 
 $router->get('/sign-in', function() use ($client) {
-    header("Location: {$client->signIn("http://{$_SERVER["HTTP_HOST"]}/callback")}");
+    header("Location: {$client->signIn("https://{$_SERVER["HTTP_HOST"]}/callback")}");
 });
 
 $router->get('/callback', function() use ($client) {
-  try {
-    $client->handleSignInCallback();
-  } catch (LogtoException $exception) {
-    return $exception;
-  }
+  // required because Logto thinks it's a good idea to check for things like
+  // PATH_INFO that may not even exist
+  $_SERVER['PATH_INFO'] = '/callback';
+  $client->handleSignInCallback();
 
   $user = $client->fetchUserInfo();
   if ($user->sub === "igd4qm8vr5kc") {
