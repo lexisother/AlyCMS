@@ -26,7 +26,7 @@ $app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function() us
 // Database stuff
 $capsule = new Capsule();
 $capsule->addConnection([
-    'driver' => 'mysql',
+    'driver' => 'pgsql',
     'host' => $_ENV['DB_HOST'] ?? 'localhost',
     'database' => $_ENV['DB_NAME'] ?? 'alycms',
     'username' => $_ENV['DB_USER'] ?? 'root',
