@@ -14,7 +14,7 @@ RUN composer install \
 FROM trafex/php-nginx:latest
 
 USER root
-RUN apk add --no-cache php82-pdo php82-pdo_mysql
+RUN apk add --no-cache php82-pgsql php82-pdo php82-pdo_pgsql php82-pdo_sqlite
 USER nobody
 
 COPY --chown=nginx --from=composer /app /var/www/html
