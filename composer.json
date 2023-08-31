@@ -6,7 +6,9 @@
         "illuminate/database": "^10.21",
         "illuminate/routing": "^10.21",
         "illuminate/events": "^10.21",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "illuminate/support": "^10.21",
+        "illuminate/config": "^10.21"
     },
     "license": "MIT",
     "autoload": {

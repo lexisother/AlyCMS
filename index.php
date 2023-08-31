@@ -1,48 +1,45 @@
 <?php
 require __DIR__ . "/vendor/autoload.php";
 
+use App\Application;
+use App\Models\Post;
 use Dotenv\Dotenv;
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-
-// Initial variables we're working with
-$app = app();
-$events = new Dispatcher();
-$request = Request::capture();
+use Illuminate\Support\Facades\DB;
 
 // Load the config file, note that if no environment variables OR .env file is
 // present, the database connection will fail.
 (Dotenv::createImmutable(__DIR__))->safeLoad();
 
-// Some useful bindings
-$app->instance('dispatcher', $events);
+// Initial variables we're working with
+$app = new Application(__DIR__);
+$request = Request::capture();
+
+// Some useful bindings (move to Application#__construct?)
 $app->instance('Illuminate\Http\Request', $request);
-$app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function() use ($app) {
+$app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function () use ($app) {
     return new Illuminate\Routing\CallableDispatcher($app);
 });
+$app->singleton('db.factory', function ($app) {
+    return new ConnectionFactory($app);
+});
+$app->singleton('db', function ($app) {
+    return new DatabaseManager($app, $app['db.factory']);
+});
 
-// Database stuff
-$capsule = new Capsule();
-$capsule->addConnection([
-    'driver' => 'pgsql',
-    'host' => getenv('DB_HOST', true) ?: 'localhost',
-    'database' => getenv('DB_NAME', true) ?: 'alycms',
-    'username' => getenv('DB_USER', true) ?: 'root',
-    'password' => getenv('DB_PASS', true) ?: 'root',
-    'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-]);
-$capsule->setEventDispatcher($events);
-$capsule->setAsGlobal();
-
-$Schema = $capsule->schema();
+$Schema = DB::getSchemaBuilder();
 require_once 'tables.php';
-$capsule->bootEloquent();
+
+// This works!
+// var_dump(DB::select('select * from posts'));
+// var_dump(Post::all());
 
 // Router stuff
-$router = new Router($events, $app);
+// TODO: MOVE TO Application OR A BOOTSTRAPPER SO WE CAN USE THE FACADE!
+$router = new Router($app['dispatcher'], $app);
 require_once 'routes.php';
 $response = $router->dispatch($request);
 $response->send();
