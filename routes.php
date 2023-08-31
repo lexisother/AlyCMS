@@ -25,8 +25,6 @@ $router->get('/cms', function() use ($client) {
 });
 
 $router->get('/sign-in', function() use ($client) {
-    // Don't ask. Logto blows.
-    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
     header("Location: {$client->signIn("https://{$_SERVER["SERVER_NAME"]}/callback")}");
 });
 
@@ -34,6 +32,8 @@ $router->get('/callback', function() use ($client) {
   // required because Logto thinks it's a good idea to check for things like
   // PATH_INFO that may not even exist
   $_SERVER['PATH_INFO'] = '/callback';
+  // Don't ask. Logto blows.
+  $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
   $client->handleSignInCallback();
 
   $user = $client->fetchUserInfo();
