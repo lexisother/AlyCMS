@@ -3,18 +3,18 @@ type: php
 docroot: ""
 php_version: "8.1"
 webserver_type: nginx-fpm
+router_http_port: "2811"
+router_https_port: "2812"
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 database:
-    type: mariadb
-    version: "10.4"
+    type: postgres
+    version: "14"
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 nodejs_version: "18"
-router_http_port: 2811  # Port to be used for http (defaults to global configuration, usually 80)
-router_https_port: 2812 # Port for https (defaults to global configuration, usually 443)
 
 # Key features of ddev's config.yaml:
 
