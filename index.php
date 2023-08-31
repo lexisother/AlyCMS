@@ -12,8 +12,9 @@ $app = app();
 $events = new Dispatcher();
 $request = Request::capture();
 
-// Load the config file
-(Dotenv::createImmutable(__DIR__))->load();
+// Load the config file, note that if no environment variables OR .env file is
+// present, the database connection will fail.
+(Dotenv::createImmutable(__DIR__))->safeLoad();
 
 // Some useful bindings
 $app->instance('dispatcher', $events);
