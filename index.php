@@ -27,10 +27,10 @@ $app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function() us
 $capsule = new Capsule();
 $capsule->addConnection([
     'driver' => 'pgsql',
-    'host' => $_ENV['DB_HOST'] ?? 'localhost',
-    'database' => $_ENV['DB_NAME'] ?? 'alycms',
-    'username' => $_ENV['DB_USER'] ?? 'root',
-    'password' => $_ENV['DB_PASS'] ?? 'root',
+    'host' => getenv('DB_HOST', true) ?: 'localhost',
+    'database' => getenv('DB_NAME', true) ?: 'alycms',
+    'username' => getenv('DB_USER', true) ?: 'root',
+    'password' => getenv('DB_PASS', true) ?: 'root',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
 ]);
