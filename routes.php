@@ -25,7 +25,7 @@ $router->get('/cms', function() use ($client) {
 });
 
 $router->get('/sign-in', function() use ($client) {
-    header("Location: {$client->signIn("https://{$_SERVER["SERVER_NAME"]}/callback")}");
+    header("Location: {$client->signIn("https://{$_SERVER["HTTP_HOST"]}/callback")}");
 });
 
 $router->get('/callback', function() use ($client) {
