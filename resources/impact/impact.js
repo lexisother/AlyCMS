@@ -69,8 +69,9 @@ window.ig = {
     script.type = 'text/javascript';
     script.src = path;
     script.onload = () => {
-      ig._waitForOnload--;
-      ig._execModules();
+      ig._execModules().then(() => {
+        ig._waitForOnload--;
+      });
     };
     script.onerror = () => {
       throw new Error(`Failed to load module ${name} at ${path} required from ${requiredFrom}`);
@@ -78,7 +79,7 @@ window.ig = {
     document.getElementsByTagName('head')[0].appendChild(script);
   },
 
-  _execModules() {
+  async _execModules() {
     let modulesLoaded = false;
     // Here be dependency resolution and execution thereof.
     for (let module of ig._loadQueue) {
@@ -95,13 +96,13 @@ window.ig = {
 
       if (dependenciesLoaded && module.body) {
         ig._loadQueue.splice(ig._loadQueue.indexOf(module), 1);
+        await module.body();
         module.loaded = true;
-        module.body();
         modulesLoaded = true;
       }
     }
     if (modulesLoaded) {
-      ig._execModules();
+      await ig._execModules();
     }
 
     // No modules executed, no more files to load but loadQueue not empty?

@@ -1,0 +1,10 @@
+name: adminer
+repository: ddev/ddev-adminer
+version: v0.2.2
+install_date: "2023-08-31T10:58:34+02:00"
+project_files:
+    - docker-compose.adminer.yaml
+    - adminer
+global_files:
+    - commands/host/launcha
+removal_actions: []
