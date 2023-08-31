@@ -25,7 +25,9 @@ $router->get('/cms', function() use ($client) {
 });
 
 $router->get('/sign-in', function() use ($client) {
-    header("Location: {$client->signIn("https://{$_SERVER["HTTP_HOST"]}/callback")}");
+    // Don't ask. Logto blows.
+    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+    header("Location: {$client->signIn("https://{$_SERVER["SERVER_NAME"]}/callback")}");
 });
 
 $router->get('/callback', function() use ($client) {
