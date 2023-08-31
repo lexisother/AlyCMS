@@ -9,7 +9,7 @@ use Logto\Sdk\LogtoConfig;
 $client = new LogtoClient(
     new LogtoConfig(
         endpoint: "https://auth.fyralabs.com",
-        appId: "eewbfi2u6pziz9cu46bat",
+        appId: "57lcee92bwg727ezooxdj",
         appSecret: getenv('LOGTO_APP_SECRET', true),
     )
 );
