@@ -4,6 +4,8 @@ namespace App\Bootstrap;
 
 use App\Application;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Connectors\ConnectionFactory;
+use Illuminate\Database\DatabaseManager;
 
 class Database {
     public function bootstrap(Application $app) {
@@ -22,5 +24,12 @@ class Database {
         $capsule->setEventDispatcher($app['dispatcher']);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+
+        $app->singleton('db.factory', function ($app) {
+            return new ConnectionFactory($app);
+        });
+        $app->singleton('db', function ($app) {
+            return new DatabaseManager($app, $app['db.factory']);
+        });
     }
 }

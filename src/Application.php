@@ -2,13 +2,11 @@
 
 namespace App;
 
-use App\Bootstrap\Database;
+use App\Bootstrap\{LoadConfiguration,Database,Twig};
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Facade;
-use App\Bootstrap\LoadConfiguration;
 
 class Application extends Container
 {
@@ -16,7 +14,8 @@ class Application extends Container
     public bool $hasBeenBootstrapped = false;
     public array $bootstrappers = [
         LoadConfiguration::class,
-        Database::class
+        Database::class,
+        Twig::class
     ];
 
     public function __construct(string $basePath = null) {
@@ -33,9 +32,9 @@ class Application extends Container
         $this->instance('app', $this);
         $this->instance(Container::class, $this);
 
-        $events = new Dispatcher();
-        $this->instance('dispatcher', $events);
+        $this->singleton('dispatcher', fn() => new Dispatcher());
 
+        // Routing
         $this->singleton('router', function($app) {
             return new Router($app['dispatcher'], $app);
         });

@@ -20,3 +20,8 @@ function app($abstract = null, array $parameters = [])
         die("Something went horribly wrong while making an instance of the container.");
     }
 }
+
+function view($name, $variables = [])
+{
+    return (app()['twig']->load($name))->render($variables);
+}

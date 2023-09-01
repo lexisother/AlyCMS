@@ -17,13 +17,9 @@ $client = new LogtoClient(
     )
 );
 
-Route::get('/fuck', function() {
-    echo 'test';
-});
-
 Route::get('/', function() use ($twig) {
     $posts = DB::select('select * from posts');
-    echo ($twig->load('index.html'))->render(['posts' => $posts]);
+    return view('index.html', ['posts' => $posts]);
 });
 Route::get('/cms', function() use ($client) {
     if (!$client->isAuthenticated()) {
