@@ -37,7 +37,7 @@ $router->get('/callback', function() use ($client) {
   // PATH_INFO that may not even exist
   $_SERVER['PATH_INFO'] = '/callback';
   // Don't ask. Logto blows.
-  $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+  // $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
   $client->handleSignInCallback();
 
   $user = $client->fetchUserInfo();
@@ -46,4 +46,42 @@ $router->get('/callback', function() use ($client) {
   } else {
       header('Location: /');
   }
+});
+
+$router->get('/api/browse', function() {
+    $dir = './' . str_replace( '..', '', $_GET['dir']);
+    if($dir[strlen($dir)-1] != '/') {
+        $dir .= '/';
+    }
+
+    $find = '*.*';
+    switch($_GET['type']) {
+        case 'markdown':
+            $find = '*.md';
+            break;
+        case 'images':
+            $find = '*.{png,gif,jpg,jpeg}';
+            break;
+    }
+
+    $dirs = glob( $dir.'*', GLOB_ONLYDIR);
+    if( $dirs === false ) $dirs = [];
+
+    $files = glob( $dir.$find, GLOB_BRACE);
+    if( $files === false ) $files = [];
+
+    $fileRootLength = strlen( './');
+    foreach($files as $i => $f) {
+        $files[$i] = substr($f, $fileRootLength);
+    }
+    foreach($dirs as $i => $d) {
+        $dirs[$i] = substr($d, $fileRootLength);
+    }
+
+    $parent = substr($_GET['dir'], 0, strrpos($_GET['dir'], '/'));
+    echo json_encode([
+        'parent' => (empty($_GET['dir']) ? false : $parent),
+        'dirs' => $dirs,
+        'files' => $files
+    ]);
 });
