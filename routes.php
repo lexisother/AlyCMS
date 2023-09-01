@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\DB;
 use Logto\Sdk\LogtoClient;
 use Logto\Sdk\LogtoConfig;
+use Twig\Environment;
 
 /** @var Router $router */
+/** @var Environment $twig */
 
 $client = new LogtoClient(
     new LogtoConfig(
@@ -14,8 +17,9 @@ $client = new LogtoClient(
     )
 );
 
-$router->get('/', function() {
-   echo file_get_contents("views/index.html");
+$router->get('/', function() use ($twig) {
+    $posts = DB::select('select * from posts');
+    echo ($twig->load('index.html'))->render(['posts' => $posts]);
 });
 $router->get('/cms', function() use ($client) {
     if (!$client->isAuthenticated()) {

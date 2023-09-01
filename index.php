@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 // Load the config file, note that if no environment variables OR .env file is
 // present, the database connection will fail.
@@ -39,9 +41,18 @@ require_once 'tables.php';
 // var_dump(Post::all());
 
 // Router stuff
+// TODO: TURN THESE INTO ITEMS ON THE SERVICE CONTAINER AND REFERENCE THEM IN
+// GLOBAL `view` FUNCTION
+$loader = new FilesystemLoader($app->joinPaths($app->basePath, 'views'));
+$twig = new Environment($loader, [
+    'cache' => $app['config']['app.env'] == 'production'
+        ? $app->joinPaths($app->basePath, '.cache')
+        : false,
+]);
 // TODO: MOVE TO Application OR A BOOTSTRAPPER SO WE CAN USE THE FACADE!
 $router = new Router($app['dispatcher'], $app);
 require_once 'routes.php';
+
 try {
     $response = $router->dispatch($request);
     $response->send();
