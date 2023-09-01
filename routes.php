@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,13 @@ Route::get('/callback', function() use ($client) {
   } else {
       header('Location: /');
   }
+});
+
+Route::get('/api/posts', function() {
+    $posts = Post::all()->toArray();
+    echo json_encode([
+       'posts' => $posts
+    ]);
 });
 
 Route::get('/api/browse', function() {
