@@ -247,6 +247,12 @@ input.modalDialogPath {
   outline: none;
 }
 
+div.modalSelectBox {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  border: 1px solid rgb(50, 50, 50);
+}
+
 input.modalDialogPath:focus {
   outline: none;
   border: 1px solid rgb(100, 100, 100);
