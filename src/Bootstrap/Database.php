@@ -12,10 +12,10 @@ class Database {
         // completely fails to recognize it.
         $capsule->addConnection([
             'driver' => 'pgsql',
-            'host' => $_ENV['DB_HOST'] ?: 'localhost',
-            'database' => $_ENV['DB_NAME'] ?: 'alycms',
-            'username' => $_ENV['DB_USER'] ?: 'root',
-            'password' => $_ENV['DB_PASS'] ?: 'root',
+            'host' => env('DB_HOST', 'localhost'),
+            'database' => env('DB_NAME', 'alycms'),
+            'username' => env('DB_USER', 'root'),
+            'password' => env('DB_PASS', 'root'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
         ]);
