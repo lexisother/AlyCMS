@@ -3,10 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <title>AlyCMS</title>
-    <script src="lib/impact/impact.js"></script>
-    <script src="lib/cms/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/lib/impact/impact.js"></script>
+    <script src="/lib/cms/main.js"></script>
+    <link rel="stylesheet" href="/resources/css/cms.css" />
   </head>
   <body>
-    authed
+    <!-- IYKYK -->
+    <div id="headerMenu">
+      <span class="headerTitle"></span>
+      <span class="unsavedTitle"></span>
+      <span class="headerFloat">
+        <input type="button" id="postSave" value="Save" class="button" />
+        <input type="button" id="postNew" value="New" class="button" />
+        <input type="button" id="postLoad" value="Load" class="button" />
+        <input
+          type="button"
+          id="toggleSidebar"
+          value="Toggle Sidebar"
+          title="Toggle Sidebar"
+          class="button" />
+      </span>
+    </div>
   </body>
 </html>
