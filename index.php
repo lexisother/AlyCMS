@@ -9,6 +9,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Load the config file, note that if no environment variables OR .env file is
 // present, the database connection will fail.
@@ -41,5 +42,9 @@ require_once 'tables.php';
 // TODO: MOVE TO Application OR A BOOTSTRAPPER SO WE CAN USE THE FACADE!
 $router = new Router($app['dispatcher'], $app);
 require_once 'routes.php';
-$response = $router->dispatch($request);
-$response->send();
+try {
+    $response = $router->dispatch($request);
+    $response->send();
+} catch (NotFoundHttpException $e) {
+    echo "That route doesn't exist.";
+}
