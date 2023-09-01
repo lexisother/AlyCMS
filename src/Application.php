@@ -6,6 +6,7 @@ use App\Bootstrap\Database;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Facade;
 use App\Bootstrap\LoadConfiguration;
 
@@ -34,6 +35,10 @@ class Application extends Container
 
         $events = new Dispatcher();
         $this->instance('dispatcher', $events);
+
+        $this->singleton('router', function($app) {
+            return new Router($app['dispatcher'], $app);
+        });
     }
 
     public function bootstrapWith(array $bootstrappers): void {

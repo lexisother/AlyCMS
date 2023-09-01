@@ -49,12 +49,11 @@ $twig = new Environment($loader, [
         ? $app->joinPaths($app->basePath, '.cache')
         : false,
 ]);
-// TODO: MOVE TO Application OR A BOOTSTRAPPER SO WE CAN USE THE FACADE!
-$router = new Router($app['dispatcher'], $app);
+
 require_once 'routes.php';
 
 try {
-    $response = $router->dispatch($request);
+    $response = $app['router']->dispatch($request);
     $response->send();
 } catch (NotFoundHttpException $e) {
     echo "That route doesn't exist.";
