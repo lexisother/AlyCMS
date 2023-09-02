@@ -248,9 +248,21 @@ input.modalDialogPath {
 }
 
 div.modalSelectBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   border: 1px solid rgb(50, 50, 50);
+}
+a.post {
+  padding: 0.5rem;
+  margin: 0.5rem;
+  color: white;
+  text-decoration: none;
+}
+a.post:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 input.modalDialogPath:focus {
