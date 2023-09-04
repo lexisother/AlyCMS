@@ -11,3 +11,12 @@ if (!Schema::hasTable('posts')) {
         $table->timestamps();
     });
 }
+
+if (!Schema::hasTable('settings')) {
+    Schema::create('settings', function (Blueprint $table) {
+       $table->id();
+       $table->string('key')->index();
+       $table->text('value')->nullable();
+       $table->timestamps();
+    });
+}
