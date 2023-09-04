@@ -34,8 +34,6 @@ Route::get('/sign-in', function() use ($client) {
 });
 
 Route::get('/callback', function() use ($client) {
-  error_log($_SERVER['SERVER_NAME']);
-  error_log($_SERVER['HTTP_HOST']);
   // required because Logto thinks it's a good idea to check for things like
   // PATH_INFO that may not even exist
   $_SERVER['PATH_INFO'] = '/callback';
@@ -44,6 +42,7 @@ Route::get('/callback', function() use ($client) {
   $client->handleSignInCallback();
 
   $user = $client->fetchUserInfo();
+  error_log("PASS!");
   if ($user->sub === "igd4qm8vr5kc") {
       header('Location: /cms');
   } else {
