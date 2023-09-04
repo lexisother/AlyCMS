@@ -34,11 +34,14 @@ Route::get('/sign-in', function() use ($client) {
 });
 
 Route::get('/callback', function() use ($client) {
+  error_log($_SERVER['PATH_INFO']);
+  error_log($_SERVER['SERVER_NAME']);
+  error_log($_SERVER['HTTP_HOST']);
   // required because Logto thinks it's a good idea to check for things like
   // PATH_INFO that may not even exist
   $_SERVER['PATH_INFO'] = '/callback';
   // Don't ask. Logto blows.
-  // $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+  $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
   $client->handleSignInCallback();
 
   $user = $client->fetchUserInfo();
