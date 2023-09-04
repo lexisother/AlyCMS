@@ -34,7 +34,6 @@ Route::get('/sign-in', function() use ($client) {
 });
 
 Route::get('/callback', function() use ($client) {
-  error_log($_SERVER['PATH_INFO']);
   error_log($_SERVER['SERVER_NAME']);
   error_log($_SERVER['HTTP_HOST']);
   // required because Logto thinks it's a good idea to check for things like
