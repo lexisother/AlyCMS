@@ -31,5 +31,8 @@ class Database {
         $app->singleton('db', function ($app) {
             return new DatabaseManager($app, $app['db.factory']);
         });
+        $app->bind('db.schema', function ($app) {
+            return $app['db']->connection()->getSchemaBuilder();
+        });
     }
 }

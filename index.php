@@ -23,7 +23,6 @@ $app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function ($ap
     return new Illuminate\Routing\CallableDispatcher($app);
 });
 
-$Schema = DB::getSchemaBuilder();
 require_once 'tables.php';
 
 // Router stuff
