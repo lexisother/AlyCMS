@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Setting;
+use App\Settings\SettingManager;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Logto\Sdk\LogtoClient;
@@ -14,7 +18,7 @@ $client = new LogtoClient(
     new LogtoConfig(
         endpoint: "https://auth.fyralabs.com",
         appId: "57lcee92bwg727ezooxdj",
-        appSecret: getenv('LOGTO_APP_SECRET', true),
+        appSecret: env('LOGTO_APP_SECRET'),
     )
 );
 
@@ -55,6 +59,17 @@ Route::get('/api/posts', function() {
     echo json_encode([
        'posts' => $posts
     ]);
+});
+
+Route::get('/api/settings', function() {
+    return Setting::all();
+});
+
+Route::patch('/api/settings', function(Request $request) {
+    $data = $request->all();
+    array_walk($data, function($value, $key) {
+        SettingManager::set($key, json_encode($value));
+    });
 });
 
 Route::get('/api/browse', function() {
