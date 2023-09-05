@@ -172,6 +172,21 @@ input#toggleSidebar.active {
   background-position: 50% 10px;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.5rem;
+}
+table,
+th,
+td {
+  border: 1px solid rgb(50, 50, 50);
+}
+
 /* --- Dialogs ------------------------------------------------------------------ */
 
 .selectFileDialog {
@@ -224,6 +239,12 @@ div.modalDialogBox {
   left: 50%;
   padding: 20px;
 }
+div.modalDialogBox.fullSize {
+  width: unset;
+  margin-left: unset;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
 div.modalDialogText {
   font-size: 180%;
@@ -263,6 +284,10 @@ a.post {
 }
 a.post:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+div.modalSettingTable {
+  margin-top: 0.5rem;
 }
 
 input.modalDialogPath:focus {
