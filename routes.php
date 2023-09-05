@@ -60,11 +60,14 @@ Route::get('/api/posts', function() {
        'posts' => $posts
     ]);
 });
+Route::patch('/api/posts/{id}', function(Request $request, int $id) {
+   $data = $request->all();
+   Post::where('id', $id)->update($data);
+});
 
 Route::get('/api/settings', function() {
     return Setting::all();
 });
-
 Route::patch('/api/settings', function(Request $request) {
     $data = $request->all();
     array_walk($data, function($value, $key) {
