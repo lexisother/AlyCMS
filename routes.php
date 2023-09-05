@@ -62,7 +62,11 @@ Route::get('/api/posts', function() {
 });
 Route::patch('/api/posts/{id}', function(Request $request, int $id) {
    $data = $request->all();
-   Post::where('id', $id)->update($data);
+   $post = Post::where(['id' => $id])->firstOr(function() use ($data) {
+       return new Post($data);
+   });
+   $post->update($data);
+   $post->save();
 });
 
 Route::get('/api/settings', function() {
