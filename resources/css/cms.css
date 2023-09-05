@@ -53,7 +53,7 @@ label {
 
 /* --- Input ------------------------------------------------------------------ */
 
-input {
+input, textarea {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgb(50, 50, 50);
   color: #fff;
@@ -110,6 +110,12 @@ input#postLoad {
 input:disabled {
   background-color: #555;
   color: #888;
+}
+
+select {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  border: 1px solid rgb(50, 50, 50);
 }
 
 /* --- Layout ------------------------------------------------------------------ */
@@ -184,12 +190,6 @@ td {
 table,
 th,
 td {
-  border: 1px solid rgb(50, 50, 50);
-}
-
-select {
-  background-color: rgba(0, 0, 0, 0.9);
-  color: white;
   border: 1px solid rgb(50, 50, 50);
 }
 
