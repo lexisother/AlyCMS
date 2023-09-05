@@ -53,7 +53,8 @@ label {
 
 /* --- Input ------------------------------------------------------------------ */
 
-input, textarea {
+input,
+textarea {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgb(50, 50, 50);
   color: #fff;
