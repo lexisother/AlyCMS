@@ -18,3 +18,4 @@ RUN apk add --no-cache php82-pgsql php82-pdo php82-pdo_pgsql php82-pdo_sqlite
 USER nobody
 
 COPY --chown=nginx --from=composer /app /var/www/html
+COPY /app/config.nginx /etc/nginx/conf.d/default.conf
