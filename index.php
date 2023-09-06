@@ -4,10 +4,13 @@ require __DIR__ . "/vendor/autoload.php";
 use App\Application;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+
+header("Cache-Control: no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
 // Load the config file, note that if no environment variables OR .env file is
 // present, the database connection will fail.
