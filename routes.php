@@ -1,18 +1,11 @@
 <?php
 
-use App\Models\Post;
-use App\Models\Setting;
+use App\Models\{Post,Setting};
 use App\Settings\SettingManager;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Logto\Sdk\LogtoClient;
-use Logto\Sdk\LogtoConfig;
-use Twig\Environment;
-
-/** @var Environment $twig */
+use Logto\Sdk\{LogtoClient,LogtoConfig};
 
 $client = new LogtoClient(
     new LogtoConfig(
@@ -22,9 +15,9 @@ $client = new LogtoClient(
     )
 );
 
-Route::get('/', function() use ($twig) {
+Route::get('/', function() {
     $posts = DB::select('select * from posts');
-    return view('index.html', ['posts' => $posts]);
+    return view('index', ['posts' => $posts]);
 });
 Route::get('/cms', function() use ($client) {
     if (!$client->isAuthenticated()) {

@@ -5,8 +5,6 @@ use App\Application;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
@@ -27,17 +25,6 @@ $app->singleton('Illuminate\Routing\Contracts\CallableDispatcher', function ($ap
 });
 
 require_once 'tables.php';
-
-// Router stuff
-// TODO: TURN THESE INTO ITEMS ON THE SERVICE CONTAINER AND REFERENCE THEM IN
-// GLOBAL `view` FUNCTION
-$loader = new FilesystemLoader($app->joinPaths($app->basePath, 'views'));
-$twig = new Environment($loader, [
-    'cache' => $app['config']['app.env'] == 'production'
-        ? $app->joinPaths($app->basePath, '.cache')
-        : false,
-]);
-
 require_once 'routes.php';
 
 try {
