@@ -9,7 +9,9 @@
         "vlucas/phpdotenv": "^5.5",
         "illuminate/support": "^10.21",
         "illuminate/config": "^10.21",
-        "twig/twig": "^3.7"
+        "twig/twig": "^3.7",
+        "twig/markdown-extra": "^3.7",
+        "league/commonmark": "^2.4"
     },
     "license": "MIT",
     "autoload": {

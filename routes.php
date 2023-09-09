@@ -19,6 +19,14 @@ Route::get('/', function() {
     $posts = DB::select('select * from posts');
     return view('index', ['posts' => $posts]);
 });
+Route::get('/posts/{id}', function(Request $request, int $id) {
+    $post = Post::where('id', $id);
+    if ($post->exists()) {
+        return view('post', ['post' => $post->first()]);
+    }
+    return view('_errors/404');
+});
+
 Route::get('/cms', function() use ($client) {
     if (!$client->isAuthenticated()) {
         header('Location: /sign-in');
