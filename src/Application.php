@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Filesystem\Filesystem;
 use App\Bootstrap\{LoadConfiguration,Database,Twig};
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
@@ -37,6 +38,10 @@ class Application extends Container
         // Routing
         $this->singleton('router', function($app) {
             return new Router($app['dispatcher'], $app);
+        });
+
+        $this->singleton('files', function() {
+            return new Filesystem();
         });
     }
 

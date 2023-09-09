@@ -2,6 +2,9 @@
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * @param $abstract
@@ -21,7 +24,20 @@ function app($abstract = null, array $parameters = [])
     }
 }
 
+/**
+ * @throws FileNotFoundException
+ */
 function view($name, $variables = [])
 {
-    return (app()['twig']->load($name))->render($variables);
+    $name = Str::replace('.', '/', $name);
+    $path = app()->joinPaths(app()->basePath('views'), $name);
+
+    if (File::exists($path . '.html')) {
+        return File::get($path . '.html');
+    }
+    if (File::exists($path . '.twig')) {
+        return (app()['twig']->load($name . '.twig'))->render($variables);
+    }
+
+    throw new FileNotFoundException("Neither a .html or a .twig file was found at $path.");
 }
