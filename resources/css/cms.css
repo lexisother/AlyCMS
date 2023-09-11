@@ -293,6 +293,27 @@ a.post:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+.assetPicker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  height: 20rem;
+  overflow: auto;
+}
+.assetPicker a {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-decoration: none;
+  width: 100px;
+  margin: 1rem;
+}
+.assetPicker img {
+  padding: 0.5rem;
+}
+.assetPicker span {
+  text-align: center;
+}
+
 div.modalSettingTable {
   margin-top: 0.5rem;
 }
