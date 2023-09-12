@@ -3,7 +3,10 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    <div>
-        {{ post.id }}
+    <div class="container">
+        <div class="title">{{ post.title }}</div>
+        <div class="content">
+            {{ post.content|markdown_to_html }}
+        </div>
     </div>
 {% endblock %}
