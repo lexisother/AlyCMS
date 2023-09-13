@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="title">{{ post.title }}</div>
+        <h1 class="title">{{ post.title }}</h1>
         <div class="content">
             {{ post.content|markdown_to_html }}
         </div>
