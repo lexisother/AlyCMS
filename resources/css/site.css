@@ -1,39 +1,43 @@
 @font-face {
-    font-family: 'Hall Fetica';
-    src: url("/resources/fonts/hall-fetica/Hall Fetica.ttf");
+  font-family: 'Hall Fetica';
+  src: url('/resources/fonts/hall-fetica/Hall Fetica.ttf');
 }
 
 @font-face {
-    font-family: 'Hall Fetica';
-    src: url("/resources/fonts/hall-fetica/Hall Fetica Italic.ttf");
-    font-style: italic;
+  font-family: 'Hall Fetica';
+  src: url('/resources/fonts/hall-fetica/Hall Fetica Italic.ttf');
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Hall Fetica';
-    src: url("/resources/fonts/hall-fetica/Hall Fetica Wide.ttf");
-    font-stretch: expanded;
+  font-family: 'Hall Fetica';
+  src: url('/resources/fonts/hall-fetica/Hall Fetica Wide.ttf');
+  font-stretch: expanded;
 }
 
 body {
-    color: white;
-    background-color: #080717;
+  color: white;
+  background-color: #080717;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 920px;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 920px;
+  margin: auto;
 }
 
 .title {
-    font-family: Hall Fetica, serif;
-    font-stretch: expanded;
+  font-family:
+    Hall Fetica,
+    serif;
+  font-stretch: expanded;
 }
 
 .content {
-    font-family: Hall Fetica, serif;
-    font-size: larger;
+  font-family:
+    Hall Fetica,
+    serif;
+  font-size: larger;
 }
