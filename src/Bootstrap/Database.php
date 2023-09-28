@@ -6,6 +6,8 @@ use App\Application;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Connectors\ConnectionFactory;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Database\Migrations\Migrator;
 
 class Database {
     public function bootstrap(Application $app) {
@@ -34,5 +36,19 @@ class Database {
         $app->bind('db.schema', function ($app) {
             return $app['db']->connection()->getSchemaBuilder();
         });
+
+        // Migration stuff
+        $app->singleton('migration.repository', function($app) {
+            $table = $app['config']['database.migrations'];
+
+            return new DatabaseMigrationRepository($app['db'], $table);
+        });
+        $app->singleton('migrator', function($app) {
+            $repository = $app['migration.repository'];
+
+            return new Migrator($repository, $app['db'], $app['files'], $app['dispatcher']);
+        });
+        // Not making this configurable is a conscious decision. We don't need more than one path.
+        $app['migrator']->path($app->joinPaths($app->basePath('src'), 'Migrations'));
     }
 }

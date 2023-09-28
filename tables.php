@@ -3,20 +3,21 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-if (!Schema::hasTable('posts')) {
-    Schema::create('posts', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->longText('content');
-        $table->timestamps();
+$app = app();
+$migrationTable = $app['config']['database.migrations'];
+
+// Required, migrator can't migrate itself of course.
+if (!Schema::hasTable($migrationTable)) {
+    Schema::create($migrationTable, function (Blueprint $table) {
+        // The migrations table is responsible for keeping track of which of the
+        // migrations have actually run for the application. We'll create the
+        // table to hold the migration file's path as well as the batch ID.
+        $table->increments('id');
+        $table->string('migration');
+        $table->integer('batch');
     });
 }
 
-if (!Schema::hasTable('settings')) {
-    Schema::create('settings', function (Blueprint $table) {
-       $table->id();
-       $table->string('key')->index();
-       $table->text('value')->nullable();
-       $table->timestamps();
-    });
-}
+// Kickoff!
+$migrator = $app['migrator'];
+$migrator->run($migrator->paths());
