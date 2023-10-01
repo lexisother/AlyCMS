@@ -33,11 +33,11 @@ class Application extends Container
         $this->instance('app', $this);
         $this->instance(Container::class, $this);
 
-        $this->singleton('dispatcher', fn() => new Dispatcher());
+        $this->singleton('events', fn() => new Dispatcher());
 
         // Routing
         $this->singleton('router', function($app) {
-            return new Router($app['dispatcher'], $app);
+            return new Router($app['events'], $app);
         });
 
         $this->singleton('files', function() {

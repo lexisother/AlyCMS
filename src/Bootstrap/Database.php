@@ -23,7 +23,7 @@ class Database {
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
         ]);
-        $capsule->setEventDispatcher($app['dispatcher']);
+        $capsule->setEventDispatcher($app['events']);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
@@ -46,7 +46,7 @@ class Database {
         $app->singleton('migrator', function($app) {
             $repository = $app['migration.repository'];
 
-            return new Migrator($repository, $app['db'], $app['files'], $app['dispatcher']);
+            return new Migrator($repository, $app['db'], $app['files'], $app['events']);
         });
         // Not making this configurable is a conscious decision. We don't need more than one path.
         $app['migrator']->path($app->joinPaths($app->basePath('src'), 'Migrations'));
