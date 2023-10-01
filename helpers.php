@@ -20,7 +20,7 @@ function app($abstract = null, array $parameters = [])
     try {
         return Container::getInstance()->make($abstract, $parameters);
     } catch (BindingResolutionException $e) {
-        die("Something went horribly wrong while making an instance of the container.");
+        die("Something went horribly wrong while making an instance of the container.\n\n$e");
     }
 }
 
