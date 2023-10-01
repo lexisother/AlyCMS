@@ -11,7 +11,8 @@
         "illuminate/config": "^10.21",
         "twig/twig": "^3.7",
         "twig/markdown-extra": "^3.7",
-        "league/commonmark": "^2.4"
+        "league/commonmark": "^2.4",
+        "ext-curl": "*"
     },
     "license": "MIT",
     "autoload": {

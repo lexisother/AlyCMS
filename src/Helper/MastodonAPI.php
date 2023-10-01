@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Helper;
+
+use CURLFile;
+
+class MastodonAPI
+{
+    private string $token;
+    private string $instance_url;
+
+    public function __construct($token, $instance_url)
+    {
+        $this->token = $token;
+        $this->instance_url = $instance_url;
+    }
+
+    public function postStatus(string $status): mixed
+    {
+        return $this->callAPI('/api/v1/statuses', 'POST', $status);
+    }
+
+    public function uploadMedia(CURLFile $media): mixed
+    {
+        return $this->callAPI('/api/v1/media', 'POST', $media);
+    }
+
+    public function callAPI($endpoint, $method, $data): mixed
+    {
+        $headers = [
+            'Authorization: Bearer '.$this->token,
+            'Content-Type: multipart/form-data',
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->instance_url.$endpoint);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $reply = curl_exec($ch);
+
+        if (!$reply) {
+            return json_encode(['ok'=>false, 'curl_error_code' => curl_errno($ch), 'curl_error' => curl_error($ch)]);
+        }
+        curl_close($ch);
+
+        return json_decode($reply, true);
+    }
+}

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Filesystem\Filesystem;
-use App\Bootstrap\{LoadConfiguration,Database,Twig};
+use App\Bootstrap\{Database, LoadConfiguration, Mastodon, Twig};
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Router;
@@ -16,7 +16,8 @@ class Application extends Container
     public array $bootstrappers = [
         LoadConfiguration::class,
         Database::class,
-        Twig::class
+        Twig::class,
+        Mastodon::class
     ];
 
     public function __construct(string $basePath = null) {
