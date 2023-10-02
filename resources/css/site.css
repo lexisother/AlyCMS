@@ -20,6 +20,10 @@ body {
   /*background-color: #080717;*/
 }
 
+canvas {
+  image-rendering: pixelated;
+}
+
 .container {
   display: flex;
   flex-direction: column;
