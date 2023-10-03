@@ -9,7 +9,7 @@ class MastodonAPI
     private string $token;
     private string $instance_url;
 
-    public function __construct($token, $instance_url)
+    public function __construct($token = '', $instance_url = '')
     {
         $this->token = $token;
         $this->instance_url = $instance_url;
