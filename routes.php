@@ -1,22 +1,17 @@
 <?php
 
-use App\Models\{Post,Setting};
+use App\Models\{Post, Setting};
 use App\Settings\SettingManager;
+use Delight\Auth\Auth;
+use Delight\Auth\InvalidEmailException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Logto\Sdk\{LogtoClient,LogtoConfig};
 
-$client = new LogtoClient(
-    new LogtoConfig(
-        endpoint: "https://auth.fyralabs.com",
-        appId: "57lcee92bwg727ezooxdj",
-        appSecret: env('LOGTO_APP_SECRET'),
-    )
-);
+$auth = app(Auth::class);
 
 // TODO: Investigate setting the namespace globally
-Route::group(['namespace' => 'App\Controllers'], function () use ($client) {
+Route::group(['namespace' => 'App\Controllers'], function () use ($auth) {
     Route::get('/', function () {
         $posts = DB::select('select * from posts');
         return view('index', ['posts' => $posts]);
@@ -29,31 +24,34 @@ Route::group(['namespace' => 'App\Controllers'], function () use ($client) {
         return view('_errors/404');
     });
 
-    Route::get('/cms', function () use ($client) {
-        if (!$client->isAuthenticated()) {
-            header('Location: /sign-in');
+    Route::get('/cms', function () use ($auth) {
+        if (!$auth->isLoggedIn()) {
+            header("Location: /sign-in");
         }
         echo file_get_contents("views/cms.html");
     });
 
-    Route::get('/sign-in', function () use ($client) {
-        header("Location: {$client->signIn("https://{$_SERVER["HTTP_HOST"]}/callback")}");
-    });
+    Route::get('/sign-in', function () use ($auth) {
+        // jfc.
+        if ((!isset($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_USER'])) ||
+            (!isset($_SERVER['PHP_AUTH_PW']) || empty($_SERVER['PHP_AUTH_PW']))
+        ) {
 
-    Route::get('/callback', function () use ($client) {
-        // required because Logto thinks it's a good idea to check for things like
-        // PATH_INFO that may not even exist
-        $_SERVER['PATH_INFO'] = '/callback';
-        // Don't ask. Logto blows.
-        $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
-        $client->handleSignInCallback();
+            header('WWW-Authenticate: Basic realm="AlyCMS"');
+            header("HTTP/2.0 401 Unauthorized");
+            die("auth failed!");
+        }
 
-        $user = $client->fetchUserInfo();
-        error_log("PASS!");
-        if ($user->sub === "igd4qm8vr5kc") {
-            header('Location: /cms');
+        try {
+            $auth->login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], null);
+        } catch (InvalidEmailException $e) {
+            header("Location: /");
+        }
+
+        if ($auth->isLoggedIn()) {
+            header("Location: /cms");
         } else {
-            header('Location: /');
+            header("Location: /");
         }
     });
 

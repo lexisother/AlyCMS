@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Filesystem\Filesystem;
-use App\Bootstrap\{Database, LoadConfiguration, Mastodon, Twig};
+use App\Bootstrap\{Auth, Database, LoadConfiguration, Mastodon, Twig};
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Facade;
 
@@ -17,10 +17,12 @@ class Application extends Container
         LoadConfiguration::class,
         Database::class,
         Twig::class,
-        Mastodon::class
+        Mastodon::class,
+        Auth::class,
     ];
 
-    public function __construct(string $basePath = null) {
+    public function __construct(string $basePath = null)
+    {
         Facade::setFacadeApplication($this);
 
         $this->basePath = $basePath;
@@ -28,7 +30,8 @@ class Application extends Container
         $this->bootstrapWith($this->bootstrappers);
     }
 
-    public function registerBaseBindings(): void {
+    public function registerBaseBindings(): void
+    {
         static::setInstance($this);
 
         $this->instance('app', $this);
@@ -37,17 +40,18 @@ class Application extends Container
         $this->singleton('events', fn() => new Dispatcher());
 
         // Routing
-        $this->singleton('router', function($app) {
+        $this->singleton('router', function ($app) {
             return new Router($app['events'], $app);
         });
 
-        $this->singleton('files', function() {
+        $this->singleton('files', function () {
             return new Filesystem();
         });
     }
 
-    public function bootstrapWith(array $bootstrappers): void {
-        foreach($bootstrappers as $bootstrapper) {
+    public function bootstrapWith(array $bootstrappers): void
+    {
+        foreach ($bootstrappers as $bootstrapper) {
             $this->make($bootstrapper)->bootstrap($this);
         }
 
@@ -59,11 +63,6 @@ class Application extends Container
         return $this->joinPaths($this->basePath('config'), $path);
     }
 
-    public function basePath(string $path = ''): string
-    {
-        return $this->joinPaths($this->basePath, $path);
-    }
-
     /**
      * Join the given paths together.
      *
@@ -73,6 +72,11 @@ class Application extends Container
      */
     public function joinPaths(string $basePath, string $path = '')
     {
-        return $basePath.($path != '' ? DIRECTORY_SEPARATOR.ltrim($path, DIRECTORY_SEPARATOR) : '');
+        return $basePath . ($path != '' ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '');
+    }
+
+    public function basePath(string $path = ''): string
+    {
+        return $this->joinPaths($this->basePath, $path);
     }
 }
