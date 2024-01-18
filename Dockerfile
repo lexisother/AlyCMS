@@ -11,10 +11,11 @@ RUN composer install \
   --no-progress
 
 # Continue stage build with the desired image and copy the source including the dependencies downloaded by composer
-FROM trafex/php-nginx:latest
+# php 8.3
+FROM trafex/php-nginx:3.5.0
 
 USER root
-RUN apk add --no-cache php82-pgsql php82-pdo php82-pdo_pgsql php82-pdo_sqlite
+RUN apk add --no-cache php83-pgsql php83-pdo php83-pdo_pgsql php83-pdo_sqlite
 USER nobody
 
 COPY --chown=nginx --from=composer /app /var/www/html
